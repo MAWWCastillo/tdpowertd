@@ -1,0 +1,36 @@
+<TDPowerTD>
+	<Screens>
+	</Screens>
+	<Towers base="tower_base">
+		<!-- <Tower name="tower_base" color="C0C0C0" obj="tower_base.obj" cost="5">
+			<Upgrade target="tower_gun" />
+			<Upgrade target="tower_cannon" />
+			<Upgrade target="tower_missile" />
+			<Upgrade target="tower_slow" />
+		</Tower> -->
+		<Tower name="tower_gun" color="C0C0C0" obj="turret_gun.obj" cost="5" cooldown=".5" range="2"/>
+		<Tower name="tower_slow" color="C0C0C0" obj="turret_slow.obj" cost="10" cooldown=".5" range="2"/>
+		<Tower name="tower_cannon" color="C0C0C0" obj="turret_cannon.obj" cost="15" cooldown="1" range="3"/>
+		<Tower name="tower_missile" color="C0C0C0" obj="turret_missile.obj" cost="25" cooldown=".5" range="4"/>
+	</Towers>
+	<Enemies>
+		<Enemy name="small_dog" obj="dog.obj" color="2020FF"/>
+		<Enemy name="big_dog" obj="dog.obj" color="FF2020" scale="1.25"/>
+		<Enemy name="small_tank" obj="tank.obj" color="2020FF"/>
+		<Enemy name="big_tank" obj="tank.obj" color="FF2020" scale="1.25"/>
+	</Enemies>
+	<Projectiles>
+		<Projectile name="missile" attack="missileAttack" mesh="missile.obj" color="FF0000" velocity="20" radius="1"/>	
+		<Projectile name="bomb" attack="cannonAttack" mesh="bomb.obj" color="0000FF" velocity="10" radius="1"/>	
+		<Projectile name="bullet" attack="bulletAttack" mesh="bullet.obj" color="FFFF00" velocity="10" radius="1"/>	
+		<Projectile name="slowball" attack="slowAttack" mesh="bullet.obj" color="00FF00" velocity="10" radius="1"/>	
+	</Projectiles>
+	<ProjectileAttacks>
+		<ProjectileAttack name="missileAttack" slows="false" enflames="false" damage="10"/>	
+		<ProjectileAttack name="bombAttack"  slows="false" enflames="false" damage="20"/>	
+		<ProjectileAttack name="bulletAttack" slows="false" enflames="false" damage="5"/>	
+		<ProjectileAttack name="slowAttack" slows="true" enflames="false" damage="1"/>	
+	</ProjectileAttacks>
+</TDPowerTD>
+		
+		
