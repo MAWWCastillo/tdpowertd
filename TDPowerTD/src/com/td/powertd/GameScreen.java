@@ -38,15 +38,15 @@ public class GameScreen implements Screen{
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1); //Clear to black
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		// keep camera in foreground layer bounds
+		// keep camera over the background
 		boolean updateCamera = false;
-		if (camera.position.x < -1024 + camera.viewportWidth / 2) {
-			camera.position.x = -1024 + (int)(camera.viewportWidth / 2);
+		if (camera.position.x < (camera.viewportWidth-tilesWide*tileSize)/ 2) {
+			camera.position.x = (int)((camera.viewportWidth-tilesWide*tileSize)/ 2);
 			updateCamera = true;
 		}
 
-		if (camera.position.x > 1024 - camera.viewportWidth / 2) {
-			camera.position.x = 1024 - (int)(camera.viewportWidth / 2);
+		if (camera.position.x > (tilesWide*tileSize-camera.viewportWidth)/ 2) {
+			camera.position.x = (int)((tilesWide*tileSize-camera.viewportWidth) / 2);
 			updateCamera = true;
 		}
 
@@ -55,8 +55,8 @@ public class GameScreen implements Screen{
 			updateCamera = true;
 		}
 		// arbitrary height of scene
-		if (camera.position.y > 400 - camera.viewportHeight / 2) {
-			camera.position.y = 400 - (int)(camera.viewportHeight / 2);
+		if (camera.position.y > tilesHigh*tileSize - camera.viewportHeight / 2) {
+			camera.position.y = tilesHigh*tileSize - (int)(camera.viewportHeight / 2);
 			updateCamera = true;
 		}
 
