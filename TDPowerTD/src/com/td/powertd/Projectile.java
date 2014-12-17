@@ -62,8 +62,8 @@ public class Projectile implements Collider {
 		this.selectiveTargeting=that.selectiveTargeting;
 		this.attack=that.attack;
 	}
-	//Only public enemy constructor
-	public static void spawnNewProjectile(String projectileType, Vector2 newLocation){
+	//Only public projectile constructor
+	public static void spawnNewProjectile(String projectileType, Vector2 newLocation, Enemy newTarget) throws Exception{
 		Projectile p;
 		if(inactiveProjectiles.size>0){
 			p=inactiveProjectiles.getValueAt(0);
@@ -72,6 +72,10 @@ public class Projectile implements Collider {
 			p=new Projectile(projectileTypes.get(projectileType), newLocation);
 			p.id=nextProjectile;
 			nextProjectile++;
+		}
+		if(p.selectiveTargeting==true){
+			if(newTarget==null) throw new Exception("Unknown Target!");
+			p.Target=newTarget;
 		}
 		activeProjectiles.put(p.id, p);
 	}
@@ -113,9 +117,14 @@ public class Projectile implements Collider {
 	@Override
 	public void update(float delta){
 		if(Target==null) die();
+		rotation=Target.location.sub(this.location).angle();
 		float travelDistance=delta*speed;
-		if(location.dst2(Target.getLocation())<travelDistance){
+		
+		if(location.dst2(Target.getLocation())<(travelDistance*travelDistance)){
 			location=Target.getLocation();
+		}else{
+			Vector2 TravelVector=new Vector2(travelDistance,0).rotate(rotation);
+			location.add(TravelVector);
 		}
 	}
 	@Override

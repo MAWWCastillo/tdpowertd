@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ArrayMap;
 
-public class Enemy implements Collider {
+public class Enemy implements Collider, GameActor {
 	public static ArrayMap<Integer,Enemy> activeEnemies;
 	public static ArrayMap<Integer,Enemy> inactiveEnemies;
 	public static ArrayMap<Integer,Enemy> transitioningEnemies;
@@ -24,7 +24,7 @@ public class Enemy implements Collider {
 	protected float radius;
 	protected float rotation;
 	float speed;
-	
+	//Static class creation
 	public static void initializeEnemies(GameMap newGameMap){
 		activeEnemies=new ArrayMap<Integer,Enemy>();
 		inactiveEnemies=new ArrayMap<Integer,Enemy>();
@@ -34,6 +34,7 @@ public class Enemy implements Collider {
 		nextEnemy=0;
 		gameMap=newGameMap;
 	}
+	//Object instantiation
 	private Enemy(Enemy that, Vector2 newLocation){
 		this.duplicate(that, newLocation);
 	}
@@ -47,6 +48,7 @@ public class Enemy implements Collider {
 		this.statusSlow=false;
 		this.location=newLocation;
 	}
+	
 	public static void registerNewMeshType(String meshName, Mesh mesh){
 		meshMap.put(meshName, mesh);
 	}
@@ -157,11 +159,25 @@ public class Enemy implements Collider {
 		for(int i=0;i<activeEnemies.size;i++){
 			e=activeEnemies.getValueAt(i);
 			e.mesh.bind();
+			
 			//Rotate by orientation
 			//Translate to location
 			e.mesh.unbind();
 		}
 	}
 
+	public static Enemy getClosestEnemy(Vector2 location){
+		float shortestDistance=Float.MAX_VALUE;
+		float tempDistance;
+		Enemy currentClosest=null;
+		for(Enemy e:activeEnemies.values){
+			tempDistance=e.location.dst2(location);
+			if(tempDistance<shortestDistance){
+				currentClosest=e;
+				shortestDistance=tempDistance;
+			}
+		}
+		return currentClosest;
+	}
 
 }

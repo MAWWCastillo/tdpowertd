@@ -12,32 +12,33 @@ public class CollisionTable {
 	public static Array <Collider>vertical;
 	public static Array <Collider>horizontal;
 	public static void addAndSort(){
+		//Add projectiles to collision tables
+		for(Projectile p:Projectile.activeProjectiles.values){
+			horizontal.add(p);
+			vertical.add(p);
+		}
+		//Add projectiles to collision tables
+		for(Enemy e:Enemy.activeEnemies.values){
+			horizontal.add(e);
+			vertical.add(e);
+		}
+		//Add towers to collision tables
+		for(Tower t:Tower.activeTowers.values){
+			horizontal.add(t);
+			vertical.add(t);
+		}
+
 		verticalSort=false;
-		for(int ip=0;ip<Projectile.activeProjectiles.size;ip++){
-			horizontal.add(Projectile.activeProjectiles.get(ip));
-		}
-		for(int ie=0;ie<Enemy.activeEnemies.size;ie++){
-			horizontal.add(Enemy.activeEnemies.get(ie));
-		}
-		for(int ip=0;ip<Projectile.activeProjectiles.size;ip++){
-			vertical.add(Projectile.activeProjectiles.get(ip));
-		}
-		for(int ie=0;ie<Enemy.activeEnemies.size;ie++){
-			vertical.add(Enemy.activeEnemies.get(ie));
-		}
 		horizontal.sort();
+		verticalSort=true;
 		vertical.sort();
 	}
+	//Need to implement faster O(n log n) algorithm
+	//Checks and executes potential collisions
 	public static void checkCollisions(){
-		Projectile p;
-		Enemy e;
-		for(int ip=0;ip<Projectile.activeProjectiles.size;ip++){
-			for(int ie=0;ie<Enemy.activeEnemies.size;ie++){
-				p=Projectile.activeProjectiles.get(ip);
-				e=Enemy.activeEnemies.get(ie);
-				if(p.collisionWith(e)){
-					p.executeAttack(e);
-				}
+		for(Projectile p:Projectile.activeProjectiles.values){
+			for(Enemy e:Enemy.activeEnemies.values){
+				if(p.collisionWith(e)){p.executeAttack(e);}
 			}
 		}
 	}
